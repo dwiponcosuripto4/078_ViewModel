@@ -96,7 +96,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
         label = { Text(
-            text = "Nama Lengkap") },
+            text = "Nama Lengkaa") },
         onValueChange = {
             textNama =it
         }
