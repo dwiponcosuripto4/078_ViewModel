@@ -208,34 +208,7 @@ fun SelectJK(
             }
         }
     }
-    Text(
-        text = "Status:",
-        fontSize = 18.sp,
-        modifier = Modifier.fillMaxWidth())
-    Column (modifier = Modifier.fillMaxWidth()) {
-        options.forEach { item ->
 
-            Row (
-                modifier = Modifier.selectable(
-                    selected = selectedValue == item,
-                    onClick = {
-                        selectedValue = item
-                        onSelectChanged(item)
-                    }
-                ),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                RadioButton(
-                    selected = selectedValue == item,
-                    onClick = {
-                        selectedValue = item
-                        onSelectChanged(item)
-                    }
-                )
-                Text(item)
-            }
-        }
-    }
 }
 @Composable
 fun SelectST(
@@ -244,34 +217,7 @@ fun SelectST(
 ) {
     var selectedValue by rememberSaveable { mutableStateOf("") }
 
-    Text(
-        text = "Status:",
-        fontSize = 18.sp,
-        modifier = Modifier.fillMaxWidth())
-    Column (modifier = Modifier.fillMaxWidth()) {
-        options.forEach { item ->
 
-            Row (
-                modifier = Modifier.selectable(
-                    selected = selectedValue == item,
-                    onClick = {
-                        selectedValue = item
-                        onSelectChanged(item)
-                    }
-                ),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                RadioButton(
-                    selected = selectedValue == item,
-                    onClick = {
-                        selectedValue = item
-                        onSelectChanged(item)
-                    }
-                )
-                Text(item)
-            }
-        }
-    }
     Text(
         text = "Status:",
         fontSize = 18.sp,
