@@ -92,6 +92,7 @@ fun TampilLayout(
 fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
     var textNama by remember { mutableStateOf("") }
     var textTlp by remember { mutableStateOf("") }
+    var textemail by remember { mutableStateOf("") }
     var textAlamat by remember { mutableStateOf("") }
 
     val context = LocalContext.current
@@ -123,20 +124,20 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
         }
     )
     OutlinedTextField(
-        value = textTlp,
+        value = textemail,
         singleLine = true,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
         label = { Text(
-            text = "Telpon") },
+            text = "Emal") },
         onValueChange = {
-            textTlp = it
+            textemail = it
         }
     )
     SelectJK(
         options = jenis.map { id -> context.resources.getString(id) },
         onSelectChanged = { cobaViewModel.setJenisK(it) })
+    SelectST(options = )
     OutlinedTextField(
         value = textAlamat,
         singleLine = true,
@@ -152,7 +153,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
     Button(
         modifier = Modifier.fillMaxWidth(),
         onClick = {
-            cobaViewModel.insertData(textNama, textTlp, textAlamat, dataForm.sex)
+            cobaViewModel.insertData(textNama, textTlp, textemail, dataForm.sex, textAlamat)
         }
     ) {
         Text(
@@ -164,6 +165,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
     TextHasil(
         namanya = cobaViewModel.namaUsr,
         telponnya = cobaViewModel.noTlp,
+        emailnya = cobaViewModel.noTlp,
         alamatnya = cobaViewModel.alamatUsr,
         jenisnya = cobaViewModel.jenisKl
     )
@@ -177,10 +179,10 @@ fun SelectJK(
     var selectedValue by rememberSaveable { mutableStateOf("") }
 
     Text(
-        text = "Register",
+        text = "Jenis Kelamin:",
         fontSize = 18.sp,
         modifier = Modifier.fillMaxWidth())
-    Column (modifier = Modifier.padding(0.dp)) {
+    Column (modifier = Modifier.fillMaxWidth()) {
         options.forEach { item ->
 
             Row (
@@ -201,6 +203,90 @@ fun SelectJK(
                     }
                 )
                 Text(item)
+            }
+        }
+    }
+    Text(
+        text = "Status:",
+        fontSize = 18.sp,
+        modifier = Modifier.fillMaxWidth())
+    Column (modifier = Modifier.fillMaxWidth()) {
+        options.forEach { item ->
+
+            Row (
+                modifier = Modifier.selectable(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectChanged(item)
+                    }
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                RadioButton(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectChanged(item)
+                    }
+                )
+                Text(item)
+            }
+        }
+    }
+}
+@Composable
+fun SelectST(
+    options: List<String>,
+    onSelectChanged: (String) -> Unit = {}
+) {
+    var selectedValue by rememberSaveable { mutableStateOf("") }
+
+    Text(
+        text = "Status:",
+        fontSize = 18.sp,
+        modifier = Modifier.fillMaxWidth())
+    Column (modifier = Modifier.fillMaxWidth()) {
+        options.forEach { item ->
+
+            Row (
+                modifier = Modifier.selectable(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectChanged(item)
+                    }
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                RadioButton(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectChanged(item)
+                    }
+                )
+                Text(item)
+            }
+        }
+    }
+    Text(
+        text = "Status:",
+        fontSize = 18.sp,
+        modifier = Modifier.fillMaxWidth())
+    Column (modifier = Modifier.fillMaxWidth()) {
+        options.forEach { item ->
+
+            Row (
+                modifier = Modifier.selectable(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectChanged(item)
+                    }
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ){
                 RadioButton(
                     selected = selectedValue == item,
                     onClick = {
@@ -215,7 +301,7 @@ fun SelectJK(
 }
 
 @Composable
-fun TextHasil(namanya: String, telponnya: String, alamatnya: String, jenisnya: String){
+fun TextHasil(namanya: String, telponnya: String, emailnya: String, alamatnya: String, jenisnya: String){
     ElevatedCard (
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -230,6 +316,11 @@ fun TextHasil(namanya: String, telponnya: String, alamatnya: String, jenisnya: S
         )
         Text(
             text = "Telepon : " + telponnya,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 5.dp)
+        )
+        Text(
+            text = "Email : " + emailnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
