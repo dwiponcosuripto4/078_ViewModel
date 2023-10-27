@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -65,15 +66,22 @@ class MainActivity : ComponentActivity() {
 fun TampilLayout(
     modifier: Modifier = Modifier
 ) {
+
     Card (
         modifier = modifier,
         elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
     ){
+
         Column (
             verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(20.dp)
         ) {
+            Text(
+                text = "Create Your Account",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(16.dp))
             TampilForm()
         }
     }
@@ -115,6 +123,21 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
         }
     )
     OutlinedTextField(
+        value = textTlp,
+        singleLine = true,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(
+            text = "Telpon") },
+        onValueChange = {
+            textTlp = it
+        }
+    )
+    SelectJK(
+        options = jenis.map { id -> context.resources.getString(id) },
+        onSelectChanged = { cobaViewModel.setJenisK(it) })
+    OutlinedTextField(
         value = textAlamat,
         singleLine = true,
         shape = MaterialTheme.shapes.large,
@@ -125,9 +148,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
             textAlamat =it
         }
     )
-    SelectJK(
-        options = jenis.map { id -> context.resources.getString(id) },
-        onSelectChanged = { cobaViewModel.setJenisK(it) })
+
     Button(
         modifier = Modifier.fillMaxWidth(),
         onClick = {
@@ -155,8 +176,13 @@ fun SelectJK(
 ) {
     var selectedValue by rememberSaveable { mutableStateOf("") }
 
-    Column (modifier = Modifier.padding(16.dp)) {
+    Text(
+        text = "Register",
+        fontSize = 18.sp,
+        modifier = Modifier.fillMaxWidth())
+    Column (modifier = Modifier.padding(0.dp)) {
         options.forEach { item ->
+
             Row (
                 modifier = Modifier.selectable(
                     selected = selectedValue == item,
@@ -167,6 +193,14 @@ fun SelectJK(
                 ),
                 verticalAlignment = Alignment.CenterVertically
             ){
+                RadioButton(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectChanged(item)
+                    }
+                )
+                Text(item)
                 RadioButton(
                     selected = selectedValue == item,
                     onClick = {
