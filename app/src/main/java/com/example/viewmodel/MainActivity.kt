@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.viewmodel.Data.DataForm
 import com.example.viewmodel.Data.DataSource.jenis
+import com.example.viewmodel.Data.DataSource.status
 import com.example.viewmodel.ui.theme.CobaViewModel
 import com.example.viewmodel.ui.theme.ViewModelTheme
 
@@ -137,7 +138,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
     SelectJK(
         options = jenis.map { id -> context.resources.getString(id) },
         onSelectChanged = { cobaViewModel.setJenisK(it) })
-    SelectST(options = )
+    SelectST(options = status.map)
     OutlinedTextField(
         value = textAlamat,
         singleLine = true,
