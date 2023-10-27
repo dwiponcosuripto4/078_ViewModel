@@ -32,7 +32,7 @@ class CobaViewModel : ViewModel() {
         emailUsr = eml;
         alamatUsr = almt;
         jenisKl = jk;
-        statusUsr
+        statusUsr = st
     }
 
     fun setJenisK(pilihJK: String) {
